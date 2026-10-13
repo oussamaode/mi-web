@@ -38,7 +38,47 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 4) Animación de aparición de las secciones al hacer scroll
+    // 4) Widget: ubicación, fecha y hora del visitante (freeipapi.com)
+    //    Obtiene la zona horaria del visitante y actualiza fecha/hora cada segundo.
+    async function iniciarWidget() {
+        var elUbicacion = document.getElementById('widget-ubicacion');
+        var elFecha = document.getElementById('widget-fecha');
+        var elHora = document.getElementById('widget-hora');
+        if (!elUbicacion || !elFecha || !elHora) return; // el widget no está en la página
+
+        try {
+            var respuesta = await fetch('https://freeipapi.com/api/json');
+            if (!respuesta.ok) throw new Error('Respuesta HTTP ' + respuesta.status);
+            var datos = await respuesta.json();
+
+            // Zona horaria del visitante (o la del navegador como respaldo)
+            var zona = datos.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+            // Ciudad y país (si falta alguno, mostramos lo que haya)
+            var ciudad = datos.cityName || '';
+            var pais = datos.countryName || '';
+            elUbicacion.textContent = [ciudad, pais].filter(Boolean).join(', ') || 'Desconocida';
+
+            var opcionesHora = { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: zona };
+            var opcionesFecha = { day: '2-digit', month: 'short', year: 'numeric', timeZone: zona };
+
+            // Pinta la fecha/hora ahora y las refresca cada segundo
+            function actualizarReloj() {
+                var ahora = new Date();
+                elHora.textContent = ahora.toLocaleTimeString('es-ES', opcionesHora);
+                elFecha.textContent = ahora.toLocaleDateString('es-ES', opcionesFecha);
+            }
+
+            actualizarReloj();
+            setInterval(actualizarReloj, 1000);
+        } catch (error) {
+            elUbicacion.textContent = 'No disponible';
+            console.error('No se pudo obtener la ubicación:', error);
+        }
+    }
+    iniciarWidget();
+
+    // 5) Animación de aparición de las secciones al hacer scroll
     var elementos = document.querySelectorAll('.revelar');
     var reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

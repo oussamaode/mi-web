@@ -28,6 +28,14 @@
 
     --fuente-texto:   'Inter', 'Lucida Sans', 'Segoe UI', Arial, sans-serif;
     --fuente-titulos: 'Poppins', 'Segoe UI', Arial, sans-serif;
+
+    /* ---- Widget flotante (esquina) ----
+       Cambia estos valores para ajustarlo a tu paleta. */
+    --widget-fondo:  rgba(255, 255, 255, 0.82);
+    --widget-borde:  var(--superficie-borde);
+    --widget-texto:  var(--texto-suave);
+    --widget-acento: var(--enlace);
+    --widget-radio:  12px;
 }
 
 /* ---- Modo oscuro: sobrescribe solo los tokens de tema ---- */
@@ -43,6 +51,7 @@
     --verde-suave:      #24302a;
     --sombra:           0 4px 18px rgba(0, 0, 0, 0.35);
     --sombra-hover:     0 10px 28px rgba(0, 0, 0, 0.5);
+    --widget-fondo:     rgba(30, 35, 31, 0.85);
 }
 
 /* =========================================================
@@ -368,4 +377,76 @@ main, .pie {
         transition: none;
     }
     .gusto:hover { transform: none; }
+}
+
+/* =========================================================
+   10. WIDGET FLOTANTE: UBICACIÓN / FECHA / HORA
+   - Pequeño, discreto, anclado en la esquina inferior derecha.
+   ========================================================= */
+.widget {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 40;
+
+    display: inline-flex;
+    flex-direction: column;
+    gap: 2px;
+    max-width: 70vw;
+    padding: 8px 12px;
+
+    font-size: 0.75rem;
+    line-height: 1.35;
+    color: var(--widget-texto);
+    text-align: left;
+    white-space: nowrap;
+
+    border: 1px solid var(--widget-borde);
+    border-radius: var(--widget-radio);
+    background-color: var(--widget-fondo);
+    box-shadow: var(--sombra);
+    backdrop-filter: blur(8px);
+
+    opacity: 0.75;
+    transition: opacity 0.2s, transform 0.2s;
+    user-select: none;
+}
+.widget:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.widget-linea {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.widget-linea-suave {
+    color: var(--widget-texto);
+    opacity: 0.85;
+}
+
+.widget-icono {
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+.widget-sep { opacity: 0.5; }
+
+/* La hora destaca ligeramente y no "salta" al cambiar los segundos */
+#widget-hora {
+    color: var(--widget-acento);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Móvil: un poco más compacto y pegado a la esquina */
+@media (max-width: 640px) {
+    .widget {
+        right: 10px;
+        bottom: 10px;
+        padding: 6px 10px;
+        font-size: 0.7rem;
+    }
 }
