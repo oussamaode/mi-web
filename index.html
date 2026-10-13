@@ -4,20 +4,88 @@
     <!-- ====== METADATOS ====== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Web personal de Oussama El Abbas Akhrif, técnico eléctrico de trenes de alta velocidad.">
-    <title>OUSSAMA EL ABBAS AKHRIF</title>
+    <meta name="description" content="Web personal de Oussama El Abbas Akhrif: técnico eléctrico de trenes de alta velocidad en Talgo y estudiante de Desarrollo de Aplicaciones Web (DAW) a distancia.">
+    <meta name="author" content="Oussama El Abbas Akhrif">
+    <meta name="theme-color" content="#232823">
+    <title>OUSSAMA EL ABBAS AKHRIF · Técnico Talgo y estudiante DAW</title>
 
-    <!-- Hoja de estilos externa (ya no hay CSS inline) -->
+    <!-- Favicon (reutiliza el icono de LinkedIn) -->
+    <link rel="icon" href="in.png" type="image/png">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="./index.html">
+
+    <!-- ====== OPEN GRAPH (Facebook, WhatsApp, LinkedIn...) ====== -->
+    <meta property="og:type" content="profile">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:title" content="Oussama El Abbas Akhrif · Técnico Talgo y estudiante DAW">
+    <meta property="og:description" content="Técnico eléctrico de trenes de alta velocidad en Talgo y estudiante de Desarrollo de Aplicaciones Web (DAW) a distancia.">
+    <meta property="og:image" content="fotopersonal.avif">
+    <meta property="og:url" content="./index.html">
+
+    <!-- ====== TWITTER / X CARD ====== -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Oussama El Abbas Akhrif · Técnico Talgo y estudiante DAW">
+    <meta name="twitter:description" content="Técnico eléctrico de trenes de alta velocidad en Talgo y estudiante de DAW a distancia.">
+    <meta name="twitter:image" content="fotopersonal.avif">
+
+    <!-- ====== TIPOGRAFÍAS ====== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Hoja de estilos externa -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Aplica el tema guardado ANTES de pintar (evita el parpadeo blanco) -->
+    <script>
+        (function () {
+            try {
+                var tema = localStorage.getItem('tema');
+                if (!tema) {
+                    tema = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', tema);
+            } catch (e) {}
+        })();
+    </script>
+
+    <!-- ====== DATOS ESTRUCTURADOS (SEO) ====== -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Oussama El Abbas Akhrif",
+        "jobTitle": "Técnico eléctrico de trenes de alta velocidad",
+        "worksFor": { "@type": "Organization", "name": "Patentes Talgo" },
+        "alumniOf": [
+            { "@type": "EducationalOrganization", "name": "IES Virgen de la Paz (Alcobendas) · Desarrollo de Aplicaciones Web" },
+            { "@type": "EducationalOrganization", "name": "IES Juan de la Cierva (Tetuán)" }
+        ],
+        "address": { "@type": "PostalAddress", "addressLocality": "Madrid", "addressCountry": "ES" },
+        "telephone": "+34632802067",
+        "email": "oussama.el.abbas.95@gmail.com",
+        "sameAs": "https://www.linkedin.com/in/oussama-el-abbas-akhrif-560a68135",
+        "knowsAbout": ["IoT", "Electrificación de trenes", "Desarrollo de Aplicaciones Web", "Industrial"]
+    }
+    </script>
 </head>
 
 <body>
 
+    <!-- Enlace para saltar directamente al contenido (accesibilidad) -->
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
     <!-- ====== CABECERA: nombre + frase ====== -->
     <header class="cabecera">
-        <img src="fotopersonal.avif" alt="Foto de Oussama El Abbas Akhrif" class="foto">
+        <img src="fotopersonal.avif" alt="Foto de Oussama El Abbas Akhrif" class="foto" width="160" height="160">
         <h1 class="nombre">OUSSAMA EL ABBAS AKHRIF</h1>
-        <p class="frase">Técnico eléctrico de trenes de alta velocidad · Tecnología e industria · IOT</p>
+        <p class="frase">Técnico eléctrico de trenes de alta velocidad en Talgo · Estudiante de DAW · Tecnología e industria · IOT</p>
+
+        <p class="chips">
+            <span class="chip">🚄 Talgo · Actualidad</span>
+            <span class="chip">🎓 DAW · IES Virgen de la Paz</span>
+        </p>
 
         <!-- Botón de modo oscuro (la lógica está en script.js) -->
         <button id="toggle-tema" class="btn-tema" type="button" aria-pressed="false">
@@ -26,15 +94,21 @@
     </header>
 
     <!-- ====== CONTENIDO PRINCIPAL ====== -->
-    <main>
+    <main id="contenido">
 
         <!-- ====== SOBRE MÍ ====== -->
-        <section id="sobre-mi" class="seccion">
+        <section id="sobre-mi" class="seccion revelar">
             <h2>Sobre mí</h2>
             <p>
                 Mi nombre es <strong>Oussama El Abbas Akhrif</strong> y tengo 30 años.
                 Soy técnico eléctrico de trenes de alta velocidad y me encanta mi profesión
                 y todo lo relativo con la tecnología y la industria.
+            </p>
+            <p>
+                Actualmente compagino mi trabajo como técnico en <strong>Talgo</strong> con mis
+                estudios de <strong>Desarrollo de Aplicaciones Web (DAW)</strong> a distancia en el
+                <strong>IES Virgen de la Paz</strong> (Alcobendas), ampliando mi formación hacia el
+                desarrollo web y el software.
             </p>
             <p>
                 Me considero un chico muy trabajador, responsable, puntual y que cumple con
@@ -44,6 +118,10 @@
             <!-- Formación académica -->
             <h3>Formación</h3>
             <ul class="lista">
+                <li>
+                    <strong>Desarrollo de Aplicaciones Web (DAW)</strong><br>
+                    IES Virgen de la Paz · Alcobendas, Madrid · a distancia · En curso
+                </li>
                 <li>
                     <strong>Técnico en instalaciones eléctricas y automáticas</strong><br>
                     IES Juan de la Cierva · Tetuán, Marruecos · 2015
@@ -56,7 +134,7 @@
         </section>
 
         <!-- ====== LO QUE HE HECHO ====== -->
-        <section id="lo-que-he-hecho" class="seccion">
+        <section id="lo-que-he-hecho" class="seccion revelar">
             <h2>Lo que he hecho</h2>
             <p>Pulsa en cada puesto para ver las tareas que he realizado.</p>
 
@@ -68,7 +146,7 @@
                 Responsable de Puesta en Marcha · <strong>GOLLMAN ZWICK</strong> · Madrid
             </button>
             <button popovertarget="exp3" class="btn-trabajo btn-act">
-                Técnico de Puesta en Marcha y Mantenimiento · <strong>PATENTES TALGO SL</strong> · Arabia / España
+                Técnico de Puesta en Marcha y Mantenimiento · <strong>PATENTES TALGO SL</strong> · Arabia / España · Actualidad
             </button>
 
             <!-- Popover: HONEYWELL -->
@@ -114,7 +192,7 @@
         </section>
 
         <!-- ====== ME GUSTA (cuadrícula de 2 columnas) ====== -->
-        <section id="me-gusta" class="seccion">
+        <section id="me-gusta" class="seccion revelar">
             <h2>Me gusta</h2>
             <div class="grid-gustos">
                 <article class="gusto">
@@ -137,15 +215,31 @@
     <!-- ====== PIE DE PÁGINA CON CONTACTO ====== -->
     <footer id="contacto" class="pie">
         <h2>Contacto</h2>
-        <p>👤 Nombre: Oussama El Abbas Akhrif</p>
-        <p>📱 Móvil: <a href="tel:+34632802067">+34 632 802 067</a></p>
-        <p>✉️ Email: <a href="mailto:oussama.el.abbas.95@gmail.com">oussama.el.abbas.95@gmail.com</a></p>
-        <p>📍 Dirección: Madrid, España</p>
+
+        <ul class="contacto-lista">
+            <li>
+                <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/></svg>
+                <span>Oussama El Abbas Akhrif</span>
+            </li>
+            <li>
+                <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.3 0 .7-.2 1L6.6 10.8Z"/></svg>
+                <a href="tel:+34632802067">+34 632 802 067</a>
+            </li>
+            <li>
+                <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"/></svg>
+                <a href="mailto:oussama.el.abbas.95@gmail.com">oussama.el.abbas.95@gmail.com</a>
+            </li>
+            <li>
+                <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
+                <span>Madrid, España</span>
+            </li>
+        </ul>
 
         <!-- Enlace a LinkedIn -->
         <a class="btn-linkedin"
            href="https://www.linkedin.com/in/oussama-el-abbas-akhrif-560a68135"
            target="_blank" rel="noopener">
+            <img src="in.png" alt="" class="icono-linkedin" width="20" height="20">
             Ver mi perfil de <strong>LinkedIn</strong>
         </a>
 

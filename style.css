@@ -20,10 +20,14 @@
     --cabecera-fondo:   var(--gris-900);
     --cabecera-texto:   #ffffff;
     --enlace:           var(--verde-fuerte);
-    --sombra:           0 2px 12px rgba(0, 0, 0, 0.08);
+    --sombra:           0 4px 18px rgba(0, 0, 0, 0.08);
+    --sombra-hover:     0 10px 28px rgba(0, 0, 0, 0.14);
 
-    --radio:  10px;
+    --radio:  12px;
     --ancho:  900px;   /* ancho máximo del contenido */
+
+    --fuente-texto:   'Inter', 'Lucida Sans', 'Segoe UI', Arial, sans-serif;
+    --fuente-titulos: 'Poppins', 'Segoe UI', Arial, sans-serif;
 }
 
 /* ---- Modo oscuro: sobrescribe solo los tokens de tema ---- */
@@ -37,6 +41,8 @@
     --cabecera-texto:   #ffffff;
     --enlace:           var(--verde);
     --verde-suave:      #24302a;
+    --sombra:           0 4px 18px rgba(0, 0, 0, 0.35);
+    --sombra-hover:     0 10px 28px rgba(0, 0, 0, 0.5);
 }
 
 /* =========================================================
@@ -44,10 +50,12 @@
    ========================================================= */
 * { box-sizing: border-box; }
 
+html { scroll-behavior: smooth; }
+
 body {
     margin: 0;
-    font-family: 'Lucida Sans', 'Segoe UI', Arial, sans-serif;
-    line-height: 1.6;
+    font-family: var(--fuente-texto);
+    line-height: 1.65;
     color: var(--texto);
     background-color: var(--fondo);
     transition: background-color 0.25s, color 0.25s;
@@ -62,6 +70,14 @@ a {
 }
 a:hover { border-bottom-color: currentColor; }
 
+/* Foco visible y accesible para navegación por teclado */
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--enlace);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
 /* Contenido centrado y limitado a 900px */
 main, .pie {
     max-width: var(--ancho);
@@ -69,14 +85,31 @@ main, .pie {
     padding: 0 24px;
 }
 
+/* Enlace "saltar al contenido" */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    background-color: var(--verde-fuerte);
+    color: #ffffff;
+    padding: 12px 18px;
+    border-radius: 0 0 var(--radio) 0;
+    font-weight: 600;
+}
+.skip-link:focus {
+    left: 0;
+    border-bottom: none;
+}
+
 /* =========================================================
    3. CABECERA
    ========================================================= */
 .cabecera {
-    background-color: var(--cabecera-fondo);
+    background: linear-gradient(160deg, #2b312b 0%, var(--cabecera-fondo) 75%);
     color: var(--cabecera-texto);
     text-align: center;
-    padding: 48px 24px 32px;
+    padding: 56px 24px 40px;
 }
 
 .foto {
@@ -85,20 +118,44 @@ main, .pie {
     object-fit: cover;
     border-radius: 50%;
     border: 4px solid var(--verde);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     display: block;
     margin: 0 auto 20px;
 }
 
 .nombre {
     margin: 0 0 8px;
-    font-size: 2rem;
+    font-family: var(--fuente-titulos);
+    font-size: 2.1rem;
+    font-weight: 700;
     letter-spacing: 1px;
 }
 
 .frase {
-    margin: 0 0 24px;
+    margin: 0 auto 20px;
+    max-width: 640px;
     color: var(--verde);
     font-size: 1.05rem;
+}
+
+/* Chips con los roles actuales */
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 0 24px;
+}
+
+.chip {
+    display: inline-block;
+    padding: 6px 14px;
+    border: 1px solid var(--verde);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--cabecera-texto);
+    background-color: rgba(170, 211, 180, 0.12);
 }
 
 /* Botón de modo oscuro */
@@ -135,10 +192,22 @@ main, .pie {
     padding-bottom: 12px;
     border-bottom: 3px solid var(--verde);
     color: var(--texto);
+    font-family: var(--fuente-titulos);
 }
 
 .lista { padding-left: 20px; }
 .lista li { margin-bottom: 12px; }
+
+/* Animación de aparición al hacer scroll */
+.revelar {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.revelar.visible {
+    opacity: 1;
+    transform: none;
+}
 
 /* =========================================================
    5. BOTONES DE EXPERIENCIA Y POPOVERS
@@ -156,9 +225,12 @@ main, .pie {
     border: 1px solid var(--superficie-borde);
     border-radius: var(--radio);
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
+    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
 }
-.btn-trabajo:hover { background-color: var(--verde); }
+.btn-trabajo:hover {
+    background-color: var(--verde);
+    box-shadow: var(--sombra-hover);
+}
 .btn-trabajo:active { transform: scale(0.99); }
 
 /* Botón destacado (experiencia actual) */
@@ -176,8 +248,13 @@ main, .pie {
     border-radius: var(--radio);
     background: var(--superficie);
     color: var(--texto);
+    box-shadow: var(--sombra-hover);
 }
-.popover h3 { margin-top: 0; color: var(--enlace); }
+.popover::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+}
+.popover h3 { margin-top: 0; color: var(--enlace); font-family: var(--fuente-titulos); }
 .popover ul { padding-left: 20px; }
 
 /* =========================================================
@@ -194,8 +271,13 @@ main, .pie {
     border-left: 4px solid var(--verde);
     border-radius: var(--radio);
     padding: 18px 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
-.gusto h3 { margin: 0 0 8px; }
+.gusto:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-hover);
+}
+.gusto h3 { margin: 0 0 8px; font-family: var(--fuente-titulos); }
 .gusto p  { margin: 0; color: var(--texto-suave); }
 
 /* =========================================================
@@ -209,8 +291,35 @@ main, .pie {
     border-top: 3px solid var(--verde);
 }
 
+.pie h2 { font-family: var(--fuente-titulos); }
+
+/* Lista de contacto con iconos */
+.contacto-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 8px;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+}
+.contacto-lista li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.icono {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    fill: var(--verde-fuerte);
+}
+[data-theme="dark"] .icono { fill: var(--verde); }
+
 .btn-linkedin {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     margin-top: 16px;
     padding: 12px 26px;
     background-color: var(--verde-fuerte);
@@ -225,6 +334,10 @@ main, .pie {
     border-bottom: none;
 }
 .btn-linkedin:active { transform: scale(0.98); }
+.icono-linkedin {
+    border-radius: 4px;
+    display: block;
+}
 
 .copyright {
     margin-top: 28px;
@@ -236,10 +349,23 @@ main, .pie {
    8. RESPONSIVE: MÓVIL (1 columna)
    ========================================================= */
 @media (max-width: 640px) {
-    .cabecera { padding: 36px 18px 26px; }
-    .nombre   { font-size: 1.5rem; }
+    .cabecera { padding: 40px 18px 28px; }
+    .nombre   { font-size: 1.6rem; }
     .seccion  { padding: 22px; }
     .grid-gustos {
         grid-template-columns: 1fr;   /* 1 columna en móvil */
     }
+}
+
+/* =========================================================
+   9. ACCESIBILIDAD: respeta la preferencia de menos movimiento
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .revelar {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    .gusto:hover { transform: none; }
 }
