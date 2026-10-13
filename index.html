@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- ====== METADATOS ====== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Web personal de Oussama El Abbas Akhrif, técnico eléctrico de trenes de alta velocidad.">
+    <title>OUSSAMA EL ABBAS AKHRIF</title>
+
+    <!-- Hoja de estilos externa (ya no hay CSS inline) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ====== CABECERA: nombre + frase ====== -->
+    <header class="cabecera">
+        <img src="fotopersonal.avif" alt="Foto de Oussama El Abbas Akhrif" class="foto">
+        <h1 class="nombre">OUSSAMA EL ABBAS AKHRIF</h1>
+        <p class="frase">Técnico eléctrico de trenes de alta velocidad · Tecnología e industria</p>
+
+        <!-- Botón de modo oscuro (la lógica está en script.js) -->
+        <button id="toggle-tema" class="btn-tema" type="button" aria-pressed="false">
+            🌙 Modo oscuro
+        </button>
+    </header>
+
+    <!-- ====== CONTENIDO PRINCIPAL ====== -->
+    <main>
+
+        <!-- ====== SOBRE MÍ ====== -->
+        <section id="sobre-mi" class="seccion">
+            <h2>Sobre mí</h2>
+            <p>
+                Mi nombre es <strong>Oussama El Abbas Akhrif</strong> y tengo 30 años.
+                Soy técnico eléctrico de trenes de alta velocidad y me encanta mi profesión
+                y todo lo relativo con la tecnología y la industria.
+            </p>
+            <p>
+                Me considero un chico muy trabajador, responsable, puntual y que cumple con
+                su deber. Me gusta aprender cosas nuevas y me adapto rápido a los cambios.
+            </p>
+
+            <!-- Formación académica -->
+            <h3>Formación</h3>
+            <ul class="lista">
+                <li>
+                    <strong>Técnico en instalaciones eléctricas y automáticas</strong><br>
+                    IES Juan de la Cierva · Tetuán, Marruecos · 2015
+                </li>
+                <li>
+                    <strong>E.S.O.</strong><br>
+                    IES Manuel Elkin Patarroyo · Parla, Madrid · 2012
+                </li>
+            </ul>
+        </section>
+
+        <!-- ====== LO QUE HE HECHO ====== -->
+        <section id="lo-que-he-hecho" class="seccion">
+            <h2>Lo que he hecho</h2>
+            <p>Pulsa en cada puesto para ver las tareas que he realizado.</p>
+
+            <!-- Botones que abren los popovers nativos -->
+            <button popovertarget="exp1" class="btn-trabajo">
+                Field Service Technician · <strong>HONEYWELL</strong> · Madrid
+            </button>
+            <button popovertarget="exp2" class="btn-trabajo">
+                Responsable de Puesta en Marcha · <strong>GOLLMAN ZWICK</strong> · Madrid
+            </button>
+            <button popovertarget="exp3" class="btn-trabajo btn-act">
+                Técnico de Puesta en Marcha y Mantenimiento · <strong>PATENTES TALGO SL</strong> · Arabia / España
+            </button>
+
+            <!-- Popover: HONEYWELL -->
+            <div popover id="exp1" class="popover">
+                <h3>Sep 2023 – Abr 2024</h3>
+                <h4>Tareas realizadas:</h4>
+                <ul>
+                    <li>Puesta en marcha de sistemas BMS Honeywell en edificios singulares.</li>
+                    <li>Programación y ajuste de PLC para control de climatización (HVAC).</li>
+                    <li>Mantenimiento preventivo y correctivo de instalaciones.</li>
+                    <li>Diagnóstico y resolución de averías.</li>
+                    <li>Intervención en edificios relevantes de Madrid (Teatro Real, Hospital Gómez Ulla, entre otros).</li>
+                </ul>
+            </div>
+
+            <!-- Popover: GOLLMAN ZWICK -->
+            <div popover id="exp2" class="popover">
+                <h3>Oct 2022 – Sep 2023</h3>
+                <h4>Tareas realizadas:</h4>
+                <ul>
+                    <li>Instalación y puesta en marcha de robots automatizados para farmacias.</li>
+                    <li>Configuración, pruebas funcionales y validación de sistemas.</li>
+                    <li>Desplazamientos y trabajos en proyectos internacionales por toda Europa.</li>
+                </ul>
+            </div>
+
+            <!-- Popover: PATENTES TALGO -->
+            <div popover id="exp3" class="popover">
+                <h3>Jun 2017 – Sep 2022 &amp; May 2024 – Actualidad</h3>
+                <h4>Tareas realizadas:</h4>
+                <ul>
+                    <li>Puesta en servicio de trenes de alta velocidad serie Talgo 350.</li>
+                    <li>Realización de pruebas estáticas y dinámicas.</li>
+                    <li>Pruebas de sistemas de freno Knorr-Bremse.</li>
+                    <li>Trabajos en alta tensión y mantenimiento eléctrico.</li>
+                    <li>Mantenimiento y diagnóstico de equipos de aire acondicionado Merak.</li>
+                    <li>Supervisión y diagnóstico de sistemas de comunicación MVB, BUS y Ethernet.</li>
+                    <li>Maniobras con el tren y resolución de averías eléctricas y de comunicación.</li>
+                    <li>Carga y actualización de software embarcado.</li>
+                    <li>Ejecución de cortes de catenaria en talleres de mantenimiento.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ====== ME GUSTA (cuadrícula de 2 columnas) ====== -->
+        <section id="me-gusta" class="seccion">
+            <h2>Me gusta</h2>
+            <div class="grid-gustos">
+                <article class="gusto">
+                    <h3>⚽ Fútbol</h3>
+                    <p>Me gusta jugar al fútbol porque me mantiene activo y me permite compartir tiempo con otras personas.</p>
+                </article>
+                <article class="gusto">
+                    <h3>🌐 Proyectos IoT</h3>
+                    <p>Disfruto creando proyectos prácticos y experimentando con tecnología aplicada a la vida diaria.</p>
+                </article>
+                <article class="gusto">
+                    <h3>💻 Programación</h3>
+                    <p>La estoy aprendiendo poco a poco para poder usarla en mis propios proyectos.</p>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ====== PIE DE PÁGINA CON CONTACTO ====== -->
+    <footer id="contacto" class="pie">
+        <h2>Contacto</h2>
+        <p>👤 Nombre: Oussama El Abbas Akhrif</p>
+        <p>📱 Móvil: <a href="tel:+34632802067">+34 632 802 067</a></p>
+        <p>✉️ Email: <a href="mailto:oussama.el.abbas.95@gmail.com">oussama.el.abbas.95@gmail.com</a></p>
+        <p>📍 Dirección: Madrid, España</p>
+
+        <!-- Enlace a LinkedIn -->
+        <a class="btn-linkedin"
+           href="https://www.linkedin.com/in/oussama-el-abbas-akhrif-560a68135"
+           target="_blank" rel="noopener">
+            Ver mi perfil de <strong>LinkedIn</strong>
+        </a>
+
+        <p class="copyright">© 2026 · OUSSAMA EL ABBAS AKHRIF</p>
+    </footer>
+
+    <!-- Script con el modo oscuro + localStorage -->
+    <script src="script.js"></script>
+</body>
+</html>

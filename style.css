@@ -1,0 +1,245 @@
+/* =========================================================
+   1. VARIABLES DE MARCA (paleta verde industrial + gris)
+   ========================================================= */
+:root {
+    --verde:        #aad3b4;   /* verde base */
+    --verde-fuerte: #4f7d5e;   /* verde para enlaces/acentos */
+    --verde-suave:  #e7f2ea;   /* fondo suave verde */
+
+    --gris-900:     #232823;   /* casi negro */
+    --gris-700:     #4a514b;   /* gris texto secundario */
+    --gris-300:     #cfd6d0;   /* bordes */
+    --gris-100:     #f2f5f3;   /* fondo claro */
+
+    /* Tokens de tema (cambian en modo oscuro) */
+    --fondo:            var(--gris-100);
+    --superficie:       #ffffff;
+    --superficie-borde: var(--gris-300);
+    --texto:            var(--gris-900);
+    --texto-suave:      var(--gris-700);
+    --cabecera-fondo:   var(--gris-900);
+    --cabecera-texto:   #ffffff;
+    --enlace:           var(--verde-fuerte);
+    --sombra:           0 2px 12px rgba(0, 0, 0, 0.08);
+
+    --radio:  10px;
+    --ancho:  900px;   /* ancho máximo del contenido */
+}
+
+/* ---- Modo oscuro: sobrescribe solo los tokens de tema ---- */
+[data-theme="dark"] {
+    --fondo:            #141715;
+    --superficie:       #1e231f;
+    --superficie-borde: #2f3832;
+    --texto:            #e7ede8;
+    --texto-suave:      #aeb8b1;
+    --cabecera-fondo:   #0f1210;
+    --cabecera-texto:   #ffffff;
+    --enlace:           var(--verde);
+    --verde-suave:      #24302a;
+}
+
+/* =========================================================
+   2. BASE
+   ========================================================= */
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'Lucida Sans', 'Segoe UI', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--texto);
+    background-color: var(--fondo);
+    transition: background-color 0.25s, color 0.25s;
+}
+
+/* Enlaces coherentes con la marca */
+a {
+    color: var(--enlace);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+}
+a:hover { border-bottom-color: currentColor; }
+
+/* Contenido centrado y limitado a 900px */
+main, .pie {
+    max-width: var(--ancho);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* =========================================================
+   3. CABECERA
+   ========================================================= */
+.cabecera {
+    background-color: var(--cabecera-fondo);
+    color: var(--cabecera-texto);
+    text-align: center;
+    padding: 48px 24px 32px;
+}
+
+.foto {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid var(--verde);
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.nombre {
+    margin: 0 0 8px;
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+
+.frase {
+    margin: 0 0 24px;
+    color: var(--verde);
+    font-size: 1.05rem;
+}
+
+/* Botón de modo oscuro */
+.btn-tema {
+    background: transparent;
+    color: var(--cabecera-texto);
+    border: 2px solid var(--verde);
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+.btn-tema:hover {
+    background-color: var(--verde);
+    color: var(--gris-900);
+}
+
+/* =========================================================
+   4. SECCIONES
+   ========================================================= */
+.seccion {
+    background-color: var(--superficie);
+    border: 1px solid var(--superficie-borde);
+    border-radius: var(--radio);
+    box-shadow: var(--sombra);
+    padding: 32px;
+    margin: 40px 0;          /* espaciado generoso entre bloques */
+}
+
+.seccion h2 {
+    margin-top: 0;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--verde);
+    color: var(--texto);
+}
+
+.lista { padding-left: 20px; }
+.lista li { margin-bottom: 12px; }
+
+/* =========================================================
+   5. BOTONES DE EXPERIENCIA Y POPOVERS
+   ========================================================= */
+.btn-trabajo {
+    display: block;
+    width: 100%;
+    text-align: left;
+    margin: 12px 0;
+    padding: 14px 18px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--texto);
+    background-color: var(--verde-suave);
+    border: 1px solid var(--superficie-borde);
+    border-radius: var(--radio);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+.btn-trabajo:hover { background-color: var(--verde); }
+.btn-trabajo:active { transform: scale(0.99); }
+
+/* Botón destacado (experiencia actual) */
+.btn-act {
+    background-color: var(--verde);
+    border-color: var(--verde-fuerte);
+    font-weight: 600;
+}
+
+/* Popover nativo */
+.popover {
+    max-width: 520px;
+    padding: 22px 26px;
+    border: 1px solid var(--superficie-borde);
+    border-radius: var(--radio);
+    background: var(--superficie);
+    color: var(--texto);
+}
+.popover h3 { margin-top: 0; color: var(--enlace); }
+.popover ul { padding-left: 20px; }
+
+/* =========================================================
+   6. "ME GUSTA": CUADRÍCULA DE 2 COLUMNAS
+   ========================================================= */
+.grid-gustos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* 2 columnas */
+    gap: 20px;
+}
+
+.gusto {
+    background-color: var(--verde-suave);
+    border-left: 4px solid var(--verde);
+    border-radius: var(--radio);
+    padding: 18px 20px;
+}
+.gusto h3 { margin: 0 0 8px; }
+.gusto p  { margin: 0; color: var(--texto-suave); }
+
+/* =========================================================
+   7. PIE DE PÁGINA / CONTACTO
+   ========================================================= */
+.pie {
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-top: 40px;
+    border-top: 3px solid var(--verde);
+}
+
+.btn-linkedin {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 12px 26px;
+    background-color: var(--verde-fuerte);
+    color: #ffffff;
+    border-radius: 999px;
+    border: none;
+    transition: background-color 0.2s, transform 0.1s;
+}
+.btn-linkedin:hover {
+    background-color: var(--verde);
+    color: var(--gris-900);
+    border-bottom: none;
+}
+.btn-linkedin:active { transform: scale(0.98); }
+
+.copyright {
+    margin-top: 28px;
+    font-size: 0.85rem;
+    color: var(--texto-suave);
+}
+
+/* =========================================================
+   8. RESPONSIVE: MÓVIL (1 columna)
+   ========================================================= */
+@media (max-width: 640px) {
+    .cabecera { padding: 36px 18px 26px; }
+    .nombre   { font-size: 1.5rem; }
+    .seccion  { padding: 22px; }
+    .grid-gustos {
+        grid-template-columns: 1fr;   /* 1 columna en móvil */
+    }
+}
