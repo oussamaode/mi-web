@@ -78,7 +78,71 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     iniciarWidget();
 
-    // 5) Animación de aparición de las secciones al hacer scroll
+    // 5) Proyectos: 3 repos públicos más recientes (GitHub REST API, sin token)
+    async function cargarRepositorios() {
+        var contenedor = document.getElementById('github-repos');
+        if (!contenedor) return; // el bloque no está en la página
+
+        var USUARIO = 'oussamaode';
+        var url = 'https://api.github.com/users/' + USUARIO + '/repos?sort=updated&per_page=3';
+
+        // Construye una tarjeta con DOM (evita inyección de HTML)
+        function crearTarjeta(repo) {
+            var tarjeta = document.createElement('article');
+            tarjeta.className = 'github-repo';
+
+            var titulo = document.createElement('h4');
+            titulo.className = 'github-titulo';
+            var enlaceTitulo = document.createElement('a');
+            enlaceTitulo.href = repo.html_url;
+            enlaceTitulo.target = '_blank';
+            enlaceTitulo.rel = 'noopener';
+            enlaceTitulo.textContent = repo.name;
+            titulo.appendChild(enlaceTitulo);
+
+            var descripcion = document.createElement('p');
+            descripcion.className = 'github-desc';
+            descripcion.textContent = repo.description || 'Sin descripción.';
+
+            var meta = document.createElement('div');
+            meta.className = 'github-meta';
+
+            var estrellas = document.createElement('span');
+            estrellas.className = 'github-stars';
+            estrellas.textContent = '★ ' + repo.stargazers_count;
+
+            var enlaceRepo = document.createElement('a');
+            enlaceRepo.href = repo.html_url;
+            enlaceRepo.target = '_blank';
+            enlaceRepo.rel = 'noopener';
+            enlaceRepo.textContent = 'Ver repositorio →';
+
+            meta.append(estrellas, enlaceRepo);
+            tarjeta.append(titulo, descripcion, meta);
+            return tarjeta;
+        }
+
+        try {
+            var respuesta = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
+            if (!respuesta.ok) throw new Error('Respuesta HTTP ' + respuesta.status);
+            var repos = await respuesta.json();
+
+            contenedor.innerHTML = '';
+            if (!Array.isArray(repos) || repos.length === 0) {
+                contenedor.innerHTML = '<p class="github-estado">No hay repositorios públicos todavía.</p>';
+                return;
+            }
+            repos.forEach(function (repo) {
+                contenedor.appendChild(crearTarjeta(repo));
+            });
+        } catch (error) {
+            contenedor.innerHTML = '<p class="github-estado">No se pudieron cargar los repositorios.</p>';
+            console.error('Error al cargar los repositorios de GitHub:', error);
+        }
+    }
+    cargarRepositorios();
+
+    // 6) Animación de aparición de las secciones al hacer scroll
     var elementos = document.querySelectorAll('.revelar');
     var reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

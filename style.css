@@ -450,3 +450,78 @@ main, .pie {
         font-size: 0.7rem;
     }
 }
+
+/* =========================================================
+   11. PROYECTOS DE GITHUB (estilo GitHub auténtico)
+   Paleta oficial: fondo #0d1117, borde #30363d,
+   texto #c9d1d9, secundario #8b949e, enlace #58a6ff,
+   estrellas #e3b341.
+   ========================================================= */
+.github-repos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 4px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.github-estado {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--texto-suave);
+    font-family: var(--fuente-texto);
+}
+
+.github-repo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    color: #c9d1d9;
+    transition: border-color 0.15s;
+}
+.github-repo:hover { border-color: #8b949e; }
+
+.github-repo .github-titulo {
+    margin: 0;
+    font-size: 0.95rem;
+    font-family: inherit;
+    font-weight: 600;
+}
+.github-repo a {
+    color: #58a6ff;
+    border-bottom: none;
+}
+.github-repo a:hover { text-decoration: underline; }
+
+.github-desc {
+    margin: 0;
+    flex: 1;
+    font-size: 0.82rem;
+    color: #8b949e;
+}
+
+.github-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.8rem;
+    color: #8b949e;
+}
+.github-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #e3b341;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+    .github-repos {
+        grid-template-columns: 1fr;
+    }
+}
