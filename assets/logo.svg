@@ -5,6 +5,12 @@
  width="3600.000000pt" height="3600.000000pt" viewBox="0 0 3600.000000 3600.000000"
  preserveAspectRatio="xMidYMid meet">
 
+<style type="text/css"><![CDATA[
+    @media (prefers-color-scheme: dark) {
+        g { fill: #e7ede8; }
+    }
+]]></style>
+
 <g transform="translate(0.000000,3600.000000) scale(0.100000,-0.100000)"
 fill="#000000" stroke="none">
 <path d="M25805 29820 c-22 -5 -67 -9 -100 -10 -72 -1 -192 -22 -222 -38 -12
