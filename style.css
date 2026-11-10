@@ -1,15 +1,15 @@
 /* =========================================================
-   1. VARIABLES DE MARCA (paleta verde industrial + gris)
+   1. VARIABLES DE MARCA (neutros + rojo/coral)
    ========================================================= */
 :root {
-    --verde:        #aad3b4;   /* verde base */
-    --verde-fuerte: #4f7d5e;   /* verde para enlaces/acentos */
-    --verde-suave:  #e7f2ea;   /* fondo suave verde */
+    --acento:        #ee6f57;   /* coral (acento claro) */
+    --acento-fuerte: #cb3737;   /* rojo (enlaces y acentos fuertes) */
+    --acento-suave:  #fdedea;   /* fondo suave coral */
 
-    --gris-900:     #232823;   /* casi negro */
-    --gris-700:     #4a514b;   /* gris texto secundario */
-    --gris-300:     #cfd6d0;   /* bordes */
-    --gris-100:     #f2f5f3;   /* fondo claro */
+    --gris-900:     #2b2b2b;   /* casi negro neutro */
+    --gris-700:     #5a5a5a;   /* gris texto secundario */
+    --gris-300:     #e3e3e3;   /* bordes */
+    --gris-100:     #fafafa;   /* fondo claro */
 
     /* Tokens de tema (cambian en modo oscuro) */
     --fondo:            var(--gris-100);
@@ -18,8 +18,9 @@
     --texto:            var(--gris-900);
     --texto-suave:      var(--gris-700);
     --cabecera-fondo:   var(--gris-900);
+    --cabecera-fondo-alto: #3a2a2a;
     --cabecera-texto:   #ffffff;
-    --enlace:           var(--verde-fuerte);
+    --enlace:           var(--acento-fuerte);
     --sombra:           0 4px 18px rgba(0, 0, 0, 0.08);
     --sombra-hover:     0 10px 28px rgba(0, 0, 0, 0.14);
 
@@ -40,18 +41,19 @@
 
 /* ---- Modo oscuro: sobrescribe solo los tokens de tema ---- */
 [data-theme="dark"] {
-    --fondo:            #141715;
-    --superficie:       #1e231f;
-    --superficie-borde: #2f3832;
-    --texto:            #e7ede8;
-    --texto-suave:      #aeb8b1;
-    --cabecera-fondo:   #0f1210;
+    --fondo:            #181818;
+    --superficie:       #222222;
+    --superficie-borde: #333333;
+    --texto:            #f5f5f5;
+    --texto-suave:      #b5b5b5;
+    --cabecera-fondo:   #111111;
+    --cabecera-fondo-alto: #1e1514;
     --cabecera-texto:   #ffffff;
-    --enlace:           var(--verde);
-    --verde-suave:      #24302a;
+    --enlace:           var(--acento);
+    --acento-suave:     #3a2724;
     --sombra:           0 4px 18px rgba(0, 0, 0, 0.35);
     --sombra-hover:     0 10px 28px rgba(0, 0, 0, 0.5);
-    --widget-fondo:     rgba(30, 35, 31, 0.85);
+    --widget-fondo:     rgba(34, 34, 34, 0.85);
 }
 
 /* =========================================================
@@ -100,7 +102,7 @@ main, .pie {
     left: -9999px;
     top: 0;
     z-index: 100;
-    background-color: var(--verde-fuerte);
+    background-color: var(--acento-fuerte);
     color: #ffffff;
     padding: 12px 18px;
     border-radius: 0 0 var(--radio) 0;
@@ -115,7 +117,7 @@ main, .pie {
    3. CABECERA
    ========================================================= */
 .cabecera {
-    background: linear-gradient(160deg, #2b312b 0%, var(--cabecera-fondo) 75%);
+    background: linear-gradient(160deg, var(--cabecera-fondo-alto) 0%, var(--cabecera-fondo) 75%);
     color: var(--cabecera-texto);
     text-align: center;
     padding: 56px 24px 40px;
@@ -126,7 +128,7 @@ main, .pie {
     height: 160px;
     object-fit: cover;
     border-radius: 50%;
-    border: 4px solid var(--verde);
+    border: 4px solid var(--acento);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     display: block;
     margin: 0 auto 20px;
@@ -143,7 +145,7 @@ main, .pie {
 .frase {
     margin: 0 auto 20px;
     max-width: 640px;
-    color: var(--verde);
+    color: var(--acento);
     font-size: 1.05rem;
 }
 
@@ -159,19 +161,19 @@ main, .pie {
 .chip {
     display: inline-block;
     padding: 6px 14px;
-    border: 1px solid var(--verde);
+    border: 1px solid var(--acento);
     border-radius: 999px;
     font-size: 0.85rem;
     font-weight: 500;
     color: var(--cabecera-texto);
-    background-color: rgba(170, 211, 180, 0.12);
+    background-color: rgba(238, 111, 87, 0.14);
 }
 
 /* Botón de modo oscuro */
 .btn-tema {
     background: transparent;
     color: var(--cabecera-texto);
-    border: 2px solid var(--verde);
+    border: 2px solid var(--acento);
     border-radius: 999px;
     padding: 10px 22px;
     font-size: 0.95rem;
@@ -180,7 +182,7 @@ main, .pie {
     transition: background-color 0.2s, color 0.2s;
 }
 .btn-tema:hover {
-    background-color: var(--verde);
+    background-color: var(--acento);
     color: var(--gris-900);
 }
 
@@ -199,7 +201,7 @@ main, .pie {
 .seccion h2 {
     margin-top: 0;
     padding-bottom: 12px;
-    border-bottom: 3px solid var(--verde);
+    border-bottom: 3px solid var(--acento);
     color: var(--texto);
     font-family: var(--fuente-titulos);
 }
@@ -230,22 +232,24 @@ main, .pie {
     font-family: inherit;
     font-size: 1rem;
     color: var(--texto);
-    background-color: var(--verde-suave);
+    background-color: var(--acento-suave);
     border: 1px solid var(--superficie-borde);
     border-radius: var(--radio);
     cursor: pointer;
     transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
 }
 .btn-trabajo:hover {
-    background-color: var(--verde);
+    background-color: var(--acento);
+    color: var(--gris-900);
     box-shadow: var(--sombra-hover);
 }
 .btn-trabajo:active { transform: scale(0.99); }
 
 /* Botón destacado (experiencia actual) */
 .btn-act {
-    background-color: var(--verde);
-    border-color: var(--verde-fuerte);
+    background-color: var(--acento);
+    border-color: var(--acento-fuerte);
+    color: var(--gris-900);
     font-weight: 600;
 }
 
@@ -276,8 +280,8 @@ main, .pie {
 }
 
 .gusto {
-    background-color: var(--verde-suave);
-    border-left: 4px solid var(--verde);
+    background-color: var(--acento-suave);
+    border-left: 4px solid var(--acento);
     border-radius: var(--radio);
     padding: 18px 20px;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -297,7 +301,7 @@ main, .pie {
     padding-top: 40px;
     padding-bottom: 40px;
     margin-top: 40px;
-    border-top: 3px solid var(--verde);
+    border-top: 3px solid var(--acento);
 }
 
 .pie h2 { font-family: var(--fuente-titulos); }
@@ -321,9 +325,9 @@ main, .pie {
     width: 18px;
     height: 18px;
     flex: 0 0 18px;
-    fill: var(--verde-fuerte);
+    fill: var(--acento-fuerte);
 }
-[data-theme="dark"] .icono { fill: var(--verde); }
+[data-theme="dark"] .icono { fill: var(--acento); }
 
 .btn-linkedin {
     display: inline-flex;
@@ -331,14 +335,14 @@ main, .pie {
     gap: 10px;
     margin-top: 16px;
     padding: 12px 26px;
-    background-color: var(--verde-fuerte);
+    background-color: var(--acento-fuerte);
     color: #ffffff;
     border-radius: 999px;
     border: none;
     transition: background-color 0.2s, transform 0.1s;
 }
 .btn-linkedin:hover {
-    background-color: var(--verde);
+    background-color: var(--acento);
     color: var(--gris-900);
     border-bottom: none;
 }

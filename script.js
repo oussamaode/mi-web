@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.documentElement.setAttribute('data-theme', tema);
         var metaColor = document.getElementById('meta-theme-color');
         if (metaColor) {
-            metaColor.setAttribute('content', tema === 'dark' ? '#141715' : '#f2f5f3');
+            metaColor.setAttribute('content', tema === 'dark' ? '#181818' : '#fafafa');
         }
         if (!boton) return;
         var oscuro = tema === 'dark';
