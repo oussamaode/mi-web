@@ -40,6 +40,7 @@
     <!-- Aplica el tema guardado ANTES de pintar (evita el parpadeo blanco) -->
     <script>
         (function () {
+            document.documentElement.classList.add('has-js');
             try {
                 var tema = localStorage.getItem('tema');
                 if (!tema) {
@@ -83,8 +84,52 @@
     <!-- Enlace para saltar directamente al contenido (accesibilidad) -->
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
+    <!-- ====== NAVEGACIÓN PRINCIPAL ====== -->
+    <nav class="navbar" id="navbar" aria-label="Navegación principal">
+        <div class="navbar-contenido">
+            <a class="navbar-logo" href="#inicio" aria-label="Oussama · Inicio">
+                <span class="navbar-logo-icono" aria-hidden="true"></span>
+                <span class="navbar-marca">Oussama</span>
+            </a>
+
+            <div class="navbar-acciones">
+                <!-- Botón de modo oscuro (la lógica está en script.js) -->
+                <button id="toggle-tema" class="btn-tema" type="button" aria-pressed="false">
+                    🌙 Modo oscuro
+                </button>
+
+                <!-- Botón del menú en móvil -->
+                <button id="menu-toggle" class="menu-toggle" type="button"
+                        aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menú">
+                    <span class="menu-toggle-barra" aria-hidden="true"></span>
+                    <span class="menu-toggle-barra" aria-hidden="true"></span>
+                    <span class="menu-toggle-barra" aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <ul class="menu-principal" id="menu-principal">
+                <li><a class="menu-enlace" href="#inicio">Inicio</a></li>
+                <li><a class="menu-enlace" href="#sobre-mi">Sobre mí</a></li>
+                <li><a class="menu-enlace" href="#lo-que-he-hecho">Trayectoria</a></li>
+                <li><a class="menu-enlace" href="#me-gusta">Intereses</a></li>
+                <li><a class="menu-enlace" href="#contacto">Contacto</a></li>
+            </ul>
+        </div>
+
+        <!-- Vía con el tren y las paradas de cada sección -->
+        <div class="via" aria-hidden="true">
+            <div class="via-carril" id="via-carril">
+                <div class="via-progreso" id="barra-progreso-relleno"></div>
+                <div class="via-paradas" id="via-paradas"></div>
+                <img class="via-tren" id="via-tren"
+                     src="tren/tren.png" alt="" width="1204" height="202"
+                     draggable="false">
+            </div>
+        </div>
+    </nav>
+
     <!-- ====== CABECERA: nombre + frase ====== -->
-    <header class="cabecera">
+    <header class="cabecera" id="inicio">
         <img src="fotopersonal.avif" alt="Foto de Oussama El Abbas Akhrif" class="foto" width="160" height="160">
         <h1 class="nombre">OUSSAMA EL ABBAS AKHRIF</h1>
         <p class="frase">Técnico eléctrico de trenes de alta velocidad en Talgo · Estudiante de DAW · Tecnología e industria · IOT</p>
@@ -93,11 +138,6 @@
             <span class="chip">🚄 Talgo · Actualidad</span>
             <span class="chip">🎓 DAW · IES Virgen de la Paz</span>
         </p>
-
-        <!-- Botón de modo oscuro (la lógica está en script.js) -->
-        <button id="toggle-tema" class="btn-tema" type="button" aria-pressed="false">
-            🌙 Modo oscuro
-        </button>
     </header>
 
     <!-- ====== CONTENIDO PRINCIPAL ====== -->
@@ -268,6 +308,11 @@
             <span id="widget-hora">—</span>
         </span>
     </aside>
+
+    <!-- Botón para volver arriba (aparece al hacer scroll) -->
+    <button id="btn-arriba" class="btn-arriba" type="button" aria-label="Volver arriba" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5l-7 7h4v7h6v-7h4z"/></svg>
+    </button>
 
     <!-- Script con el modo oscuro + localStorage -->
     <script src="script.js"></script>

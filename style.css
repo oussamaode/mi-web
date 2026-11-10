@@ -27,6 +27,11 @@
     --radio:  12px;
     --ancho:  900px;   /* ancho máximo del contenido */
 
+    /* Barra de navegación fija */
+    --navbar-fondo: rgba(250, 250, 250, 0.85);
+    --navbar-altura: 60px;
+    --via-alto: 26px;
+
     --fuente-texto:   'Inter', 'Lucida Sans', 'Segoe UI', Arial, sans-serif;
     --fuente-titulos: 'Poppins', 'Segoe UI', Arial, sans-serif;
 
@@ -53,6 +58,7 @@
     --acento-suave:     #3a2724;
     --sombra:           0 4px 18px rgba(0, 0, 0, 0.35);
     --sombra-hover:     0 10px 28px rgba(0, 0, 0, 0.5);
+    --navbar-fondo:     rgba(24, 24, 24, 0.85);
     --widget-fondo:     rgba(34, 34, 34, 0.85);
 }
 
@@ -61,7 +67,10 @@
    ========================================================= */
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--navbar-altura) + var(--via-alto) + 8px);
+}
 
 body {
     margin: 0;
@@ -114,6 +123,222 @@ main, .pie {
 }
 
 /* =========================================================
+   2.1 NAVEGACIÓN PRINCIPAL (barra fija)
+   ========================================================= */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: var(--navbar-fondo);
+    border-bottom: 1px solid var(--superficie-borde);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+.navbar.scrolled { box-shadow: var(--sombra); }
+
+.navbar-contenido {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: var(--ancho);
+    min-height: var(--navbar-altura);
+    margin: 0 auto;
+    padding: 8px 24px;
+}
+
+/* Logo (máscara monocroma que hereda el color del texto) */
+.navbar-logo {
+    order: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    color: var(--texto);
+    font-family: var(--fuente-titulos);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-bottom: none;
+    transition: color 0.2s;
+}
+.navbar-logo:hover {
+    color: var(--enlace);
+    border-bottom: none;
+}
+
+.navbar-logo-icono {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 auto;
+    background-color: currentColor;
+    -webkit-mask: url("assets/logo.svg") center / contain no-repeat;
+    mask: url("assets/logo.svg") center / contain no-repeat;
+}
+
+/* Si el navegador no soporta máscaras, ocultamos el icono (queda el texto) */
+@supports not ((-webkit-mask: url("assets/logo.svg")) or (mask: url("assets/logo.svg"))) {
+    .navbar-logo-icono { display: none; }
+}
+
+.navbar-acciones {
+    order: 3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+}
+
+/* Menú de enlaces */
+.menu-principal {
+    order: 2;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0 0 0 auto;
+    padding: 0;
+    list-style: none;
+}
+
+.menu-enlace {
+    position: relative;
+    display: inline-block;
+    padding: 8px 12px;
+    color: var(--texto-suave);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-bottom: none;
+    border-radius: 8px;
+    transition: color 0.2s, background-color 0.2s;
+}
+.menu-enlace:hover {
+    color: var(--texto);
+    background-color: var(--acento-suave);
+    border-bottom: none;
+}
+.menu-enlace.is-active {
+    color: var(--enlace);
+    font-weight: 600;
+}
+.menu-enlace.is-active::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 2px;
+    height: 2px;
+    background-color: var(--enlace);
+    border-radius: 2px;
+}
+
+/* Botón hamburguesa (solo móvil) */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--superficie-borde);
+    border-radius: 10px;
+    cursor: pointer;
+}
+.menu-toggle-barra {
+    display: block;
+    width: 18px;
+    height: 2px;
+    margin: 0 auto;
+    background-color: var(--texto);
+    border-radius: 2px;
+    transition: transform 0.2s, opacity 0.2s;
+}
+.menu-toggle[aria-expanded="true"] .menu-toggle-barra:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.menu-toggle[aria-expanded="true"] .menu-toggle-barra:nth-child(2) {
+    opacity: 0;
+}
+.menu-toggle[aria-expanded="true"] .menu-toggle-barra:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Vía del tren: progreso de lectura + paradas */
+.via {
+    max-width: var(--ancho);
+    height: var(--via-alto);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+.via-carril {
+    position: relative;
+    height: 100%;
+}
+.via-carril::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4px;
+    height: 2px;
+    background-color: var(--superficie-borde);
+    border-radius: 2px;
+}
+.via-progreso {
+    position: absolute;
+    left: 0;
+    bottom: 4px;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--acento), var(--acento-fuerte));
+    border-radius: 2px;
+}
+.via-parada {
+    position: absolute;
+    bottom: 1px;
+    width: 8px;
+    height: 8px;
+    margin-left: -4px;
+    background-color: var(--superficie);
+    border: 2px solid var(--texto-suave);
+    border-radius: 50%;
+    visibility: hidden;
+    transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+}
+.via-parada.is-reached {
+    background-color: var(--acento);
+    border-color: var(--acento-fuerte);
+}
+[data-theme="dark"] .via-parada.is-reached {
+    border-color: var(--acento);
+}
+.via-parada.is-current {
+    transform: scale(1.35);
+    box-shadow: 0 0 0 3px var(--acento-suave);
+}
+.via-tren {
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+    height: 20px;
+    width: auto;
+    max-width: none;
+    transform: translateX(-50%);
+    visibility: hidden;
+    pointer-events: none;
+    user-select: none;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.18));
+}
+
+/* Se muestra cuando JS ya ha calculado posiciones */
+.via-lista .via-tren,
+.via-lista .via-parada { visibility: visible; }
+
+[data-theme="dark"] .via-tren {
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.28));
+}
+
+/* =========================================================
    3. CABECERA
    ========================================================= */
 .cabecera {
@@ -155,7 +380,7 @@ main, .pie {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    margin: 0 0 24px;
+    margin: 0;
 }
 
 .chip {
@@ -169,15 +394,17 @@ main, .pie {
     background-color: rgba(238, 111, 87, 0.14);
 }
 
-/* Botón de modo oscuro */
+/* Botón de modo oscuro (vive en la navbar) */
 .btn-tema {
     background: transparent;
-    color: var(--cabecera-texto);
+    color: var(--texto);
     border: 2px solid var(--acento);
     border-radius: 999px;
-    padding: 10px 22px;
-    font-size: 0.95rem;
+    padding: 7px 14px;
+    font-size: 0.85rem;
     font-family: inherit;
+    font-weight: 500;
+    white-space: nowrap;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
 }
@@ -368,6 +595,79 @@ main, .pie {
     .grid-gustos {
         grid-template-columns: 1fr;   /* 1 columna en móvil */
     }
+    .via { padding: 0 18px; }
+    .via-tren {
+        bottom: 3px;
+        height: 16px;
+    }
+}
+
+/* =========================================================
+   8.1 NAVEGACIÓN EN MÓVIL (menú desplegable)
+   ========================================================= */
+@media (max-width: 768px) {
+    .navbar-contenido {
+        flex-wrap: wrap;
+        gap: 0;
+        padding: 8px 18px;
+    }
+    .navbar-logo { order: 1; }
+    .navbar-acciones {
+        order: 2;
+        margin-left: auto;
+    }
+    .has-js .menu-toggle { display: inline-flex; }
+    .menu-principal {
+        order: 3;
+        flex-basis: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 2px;
+        margin: 0;
+        padding: 6px 0 8px;
+        border-top: 1px solid var(--superficie-borde);
+    }
+    .has-js .menu-principal {
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        visibility: hidden;
+        opacity: 0;
+        border-top: 0;
+        transition: max-height 0.25s ease, opacity 0.2s ease, visibility 0.25s;
+    }
+    .has-js .menu-principal.abierto {
+        max-height: 320px;
+        padding: 6px 0 8px;
+        border-top: 1px solid var(--superficie-borde);
+        visibility: visible;
+        opacity: 1;
+    }
+    .menu-enlace {
+        display: block;
+        padding: 10px 12px;
+    }
+    .menu-enlace.is-active {
+        background-color: var(--acento-suave);
+    }
+    .menu-enlace.is-active::after { display: none; }
+}
+
+/* Pantallas muy estrechas: navbar más compacta */
+@media (max-width: 400px) {
+    .navbar-contenido {
+        gap: 8px;
+        padding: 8px 12px;
+    }
+    .via { padding: 0 12px; }
+    .navbar-logo { gap: 6px; font-size: 0.85rem; }
+    .navbar-logo-icono { width: 24px; height: 24px; }
+    .navbar-acciones { gap: 6px; }
+    .btn-tema { padding: 6px 9px; font-size: 0.75rem; }
+    .menu-toggle {
+        width: 36px;
+        height: 36px;
+    }
 }
 
 /* =========================================================
@@ -381,6 +681,41 @@ main, .pie {
         transition: none;
     }
     .gusto:hover { transform: none; }
+    .via-parada { transition: none; }
+}
+
+/* =========================================================
+   9.1 BOTÓN VOLVER ARRIBA
+   ========================================================= */
+.btn-arriba {
+    position: fixed;
+    right: 16px;
+    bottom: 96px;
+    z-index: 41;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background-color: var(--acento-fuerte);
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    box-shadow: var(--sombra);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+.btn-arriba[hidden] { display: none; }
+.btn-arriba:hover {
+    background-color: var(--acento);
+    color: var(--gris-900);
+    transform: translateY(-2px);
+}
+.btn-arriba svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
 }
 
 /* =========================================================
@@ -452,6 +787,12 @@ main, .pie {
         bottom: 10px;
         padding: 6px 10px;
         font-size: 0.7rem;
+    }
+    .btn-arriba {
+        right: 10px;
+        bottom: 84px;
+        width: 40px;
+        height: 40px;
     }
 }
 

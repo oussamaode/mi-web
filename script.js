@@ -142,11 +142,221 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
             contenedor.innerHTML = '<p class="github-estado">No se pudieron cargar los repositorios.</p>';
             console.error('Error al cargar los repositorios de GitHub:', error);
+        } finally {
+            // Los repos pueden cambiar la altura de la página: recolocamos la vía
+            alHacerScroll();
         }
     }
     cargarRepositorios();
 
-    // 6) Animación de aparición de las secciones al hacer scroll
+    // 6) Navegación: menú móvil, enlace activo, vía del tren y volver arriba
+    var navbar = document.getElementById('navbar');
+    var menuToggle = document.getElementById('menu-toggle');
+    var menuPrincipal = document.getElementById('menu-principal');
+    var barraProgreso = document.getElementById('barra-progreso-relleno');
+    var viaCarril = document.getElementById('via-carril');
+    var viaTren = document.getElementById('via-tren');
+    var viaParadas = document.getElementById('via-paradas');
+    var btnArriba = document.getElementById('btn-arriba');
+    var enlacesMenu = menuPrincipal ? menuPrincipal.querySelectorAll('.menu-enlace') : [];
+    var reducirMovimientoNav = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 6.1) Menú desplegable en móvil
+    function menuAbierto() {
+        return menuPrincipal && menuPrincipal.classList.contains('abierto');
+    }
+
+    function abrirMenu() {
+        if (!menuPrincipal || !menuToggle) return;
+        menuPrincipal.classList.add('abierto');
+        menuToggle.setAttribute('aria-expanded', 'true');
+        menuToggle.setAttribute('aria-label', 'Cerrar menú');
+    }
+
+    function cerrarMenu(instantaneo) {
+        if (!menuPrincipal || !menuToggle) return;
+        if (instantaneo) {
+            // Cierre sin animación: evita que el menú desplace el destino del ancla
+            menuPrincipal.style.transition = 'none';
+            menuPrincipal.classList.remove('abierto');
+            void menuPrincipal.offsetHeight;
+            menuPrincipal.style.transition = '';
+        } else {
+            menuPrincipal.classList.remove('abierto');
+        }
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Abrir menú');
+    }
+
+    if (menuToggle && menuPrincipal) {
+        menuToggle.addEventListener('click', function () {
+            if (menuAbierto()) {
+                cerrarMenu();
+            } else {
+                abrirMenu();
+            }
+        });
+
+        enlacesMenu.forEach(function (enlace) {
+            enlace.addEventListener('click', function () {
+                cerrarMenu(true);
+            });
+        });
+
+        // Cierra al pulsar fuera de la barra
+        document.addEventListener('click', function (evento) {
+            if (!menuAbierto()) return;
+            if (navbar && !navbar.contains(evento.target)) cerrarMenu();
+        });
+
+        // Cierra con Escape y devuelve el foco al botón
+        document.addEventListener('keydown', function (evento) {
+            if (evento.key === 'Escape' && menuAbierto()) {
+                cerrarMenu();
+                menuToggle.focus();
+            }
+        });
+
+        // Al pasar a escritorio, aseguramos que el menú quede cerrado
+        var escritorio = window.matchMedia('(min-width: 769px)');
+        var alCambiarAncho = function (evento) {
+            if (evento.matches) cerrarMenu();
+        };
+        if (escritorio.addEventListener) {
+            escritorio.addEventListener('change', alCambiarAncho);
+        } else if (escritorio.addListener) {
+            escritorio.addListener(alCambiarAncho);
+        }
+    }
+
+    // 6.2) Enlace activo según la sección en la que estamos
+    var secciones = [];
+    enlacesMenu.forEach(function (enlace) {
+        var destino = document.querySelector(enlace.getAttribute('href'));
+        if (destino) secciones.push({ enlace: enlace, elemento: destino });
+    });
+
+    // Crea un punto de parada en la vía por cada sección
+    if (viaParadas) {
+        viaParadas.innerHTML = '';
+        secciones.forEach(function (item) {
+            var parada = document.createElement('span');
+            parada.className = 'via-parada';
+            parada.title = item.enlace.textContent.trim();
+            viaParadas.appendChild(parada);
+        });
+    }
+
+    function marcarEnlaceActivo() {
+        if (!secciones.length) return;
+        var limite = window.scrollY + (navbar ? navbar.offsetHeight : 0) + 80;
+        var activa = secciones[0];
+
+        secciones.forEach(function (item) {
+            if (item.elemento.offsetTop <= limite) activa = item;
+        });
+
+        // Si hemos llegado al final, marcamos el último enlace (Contacto)
+        var alFinal = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+        if (alFinal) activa = secciones[secciones.length - 1];
+
+        secciones.forEach(function (item) {
+            var esActiva = item === activa;
+            item.enlace.classList.toggle('is-active', esActiva);
+            if (esActiva) {
+                item.enlace.setAttribute('aria-current', 'location');
+            } else {
+                item.enlace.removeAttribute('aria-current');
+            }
+        });
+    }
+
+    // 6.3) Vía del tren: progreso, paradas y sombra de la navbar
+    function actualizarVia() {
+        if (!viaCarril || !viaTren) return;
+
+        var ancho = viaCarril.clientWidth;
+        if (!ancho) return;
+
+        var anchoTren = viaTren.offsetWidth;
+        var mitad = Math.min(anchoTren / 2, ancho / 2);
+        var recorrido = Math.max(0, ancho - anchoTren);
+        var altura = document.documentElement.scrollHeight - window.innerHeight;
+        var progreso = altura > 0 ? Math.max(0, Math.min(1, window.scrollY / altura)) : 0;
+        var centro = mitad + progreso * recorrido;
+
+        viaTren.style.left = centro + 'px';
+
+        if (barraProgreso) {
+            barraProgreso.style.left = mitad + 'px';
+            barraProgreso.style.width = Math.max(0, centro - mitad) + 'px';
+        }
+
+        var lectura = (navbar ? navbar.offsetHeight : 0) + 80;
+        var nodos = viaParadas ? viaParadas.children : [];
+        var indiceActual = 0;
+
+        secciones.forEach(function (item, i) {
+            var p = altura > 0 ? (item.elemento.offsetTop - lectura) / altura : 0;
+            p = Math.max(0, Math.min(1, p));
+            if (i === 0) p = 0;
+            if (i === secciones.length - 1) p = 1;
+
+            var nodo = nodos[i];
+            if (nodo) {
+                nodo.style.left = (mitad + p * recorrido) + 'px';
+                nodo.classList.toggle('is-reached', progreso >= p - 0.001);
+            }
+            if (progreso >= p - 0.001) indiceActual = i;
+        });
+
+        Array.prototype.forEach.call(nodos, function (nodo, i) {
+            nodo.classList.toggle('is-current', i === indiceActual);
+        });
+
+        if (viaCarril.parentElement) {
+            viaCarril.parentElement.classList.add('via-lista');
+        }
+    }
+
+    function actualizarBotonArriba() {
+        if (!btnArriba) return;
+        btnArriba.hidden = window.scrollY <= 400;
+    }
+
+    function actualizarNavbar() {
+        if (!navbar) return;
+        navbar.classList.toggle('scrolled', window.scrollY > 8);
+    }
+
+    if (btnArriba) {
+        btnArriba.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: reducirMovimientoNav ? 'auto' : 'smooth'
+            });
+        });
+    }
+
+    var pendiente = false;
+    function alHacerScroll() {
+        if (pendiente) return;
+        pendiente = true;
+        window.requestAnimationFrame(function () {
+            actualizarNavbar();
+            marcarEnlaceActivo();
+            actualizarVia();
+            actualizarBotonArriba();
+            pendiente = false;
+        });
+    }
+
+    window.addEventListener('scroll', alHacerScroll, { passive: true });
+    window.addEventListener('resize', alHacerScroll);
+    window.addEventListener('load', alHacerScroll);
+    alHacerScroll();
+
+    // 7) Animación de aparición de las secciones al hacer scroll
     var elementos = document.querySelectorAll('.revelar');
     var reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
