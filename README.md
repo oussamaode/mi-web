@@ -12,7 +12,11 @@ Sitio estático hecho con HTML, CSS y JavaScript puro, sin dependencias ni proce
 | `style.css`         | Estilos, tema claro/oscuro y diseño responsive       |
 | `script.js`         | Modo oscuro con memoria + animaciones al hacer scroll |
 | `fotopersonal.avif` | Foto de perfil                                        |
-| `in.png`            | Icono de LinkedIn (también usado como favicon)       |
+| `in.png`            | Icono de LinkedIn (botón del footer)                 |
+| `assets/`           | Imagen Open Graph, favicons e iconos del sitio       |
+| `robots.txt`        | Reglas para buscadores                               |
+| `sitemap.xml`       | Mapa del sitio para buscadores                       |
+| `PLAN-MEJORAS.md`   | Plan de mejoras por fases                            |
 
 ## Secciones
 
