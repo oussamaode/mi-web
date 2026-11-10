@@ -16,7 +16,6 @@ Sitio estático hecho con HTML, CSS y JavaScript puro, sin dependencias ni proce
 | `assets/`           | Logo/favicon e iconos del sitio                      |
 | `robots.txt`        | Reglas para buscadores                               |
 | `sitemap.xml`       | Mapa del sitio para buscadores                       |
-| `PLAN-MEJORAS.md`   | Plan de mejoras por fases                            |
 
 ## Secciones
 
