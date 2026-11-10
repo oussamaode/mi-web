@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // 1) Aplica un tema al <html> y actualiza el botón
     function aplicarTema(tema) {
         document.documentElement.setAttribute('data-theme', tema);
+        var metaColor = document.getElementById('meta-theme-color');
+        if (metaColor) {
+            metaColor.setAttribute('content', tema === 'dark' ? '#141715' : '#f2f5f3');
+        }
         if (!boton) return;
         var oscuro = tema === 'dark';
         boton.setAttribute('aria-pressed', String(oscuro));
