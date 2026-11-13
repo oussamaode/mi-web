@@ -149,13 +149,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     cargarRepositorios();
 
-    // 5.1) Modal interactivo: experiencia en Gollmann
-    var modalGollmann = document.getElementById('modal-gollmann');
-    if (modalGollmann) {
-        var disparadoresGollmann = document.querySelectorAll('[data-abrir-modal="modal-gollmann"]');
-        var cerrarGollmann = modalGollmann.querySelector('.modal-gollmann__cerrar');
-        var focoAnteriorGollmann = null;
-        var temporizadorCierreGollmann = null;
+    // 5.1) Modales interactivos: experiencia profesional
+    var modalesExperiencia = document.querySelectorAll('.modal-experiencia');
+    var disparadoresExperiencia = document.querySelectorAll('[data-abrir-modal]');
+    if (modalesExperiencia.length && disparadoresExperiencia.length) {
+        var modalActivo = null;
+        var focoAnterior = null;
+        var temporizadorCierre = null;
         var reducirMovimientoModal = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         function bloquearScrollPagina() {
@@ -171,67 +171,87 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.style.paddingRight = '';
         }
 
-        function abrirModalGollmann(disparador) {
-            focoAnteriorGollmann = disparador || document.activeElement;
-            if (temporizadorCierreGollmann) {
-                window.clearTimeout(temporizadorCierreGollmann);
-                temporizadorCierreGollmann = null;
+        function abrirModalExperiencia(disparador) {
+            var idModal = disparador.getAttribute('data-abrir-modal');
+            var modal = idModal ? document.getElementById(idModal) : null;
+            if (!modal || !modal.classList.contains('modal-experiencia')) return;
+            if (modalActivo && modalActivo.open) return;
+
+            if (temporizadorCierre) {
+                window.clearTimeout(temporizadorCierre);
+                temporizadorCierre = null;
             }
-            modalGollmann.classList.remove('cerrando');
+
+            modalActivo = modal;
+            focoAnterior = disparador || document.activeElement;
+            modal.classList.remove('cerrando');
             bloquearScrollPagina();
 
-            if (typeof modalGollmann.showModal === 'function') {
-                modalGollmann.showModal();
+            if (typeof modal.showModal === 'function') {
+                modal.showModal();
             } else {
-                modalGollmann.setAttribute('open', '');
+                modal.setAttribute('open', '');
             }
 
-            if (cerrarGollmann) cerrarGollmann.focus();
+            var botonCerrar = modal.querySelector('.modal-experiencia__cerrar');
+            if (botonCerrar) botonCerrar.focus();
         }
 
-        function cerrarModalGollmann() {
-            if (!modalGollmann.open || modalGollmann.classList.contains('cerrando')) return;
-            modalGollmann.classList.add('cerrando');
+        function finalizarCierreModal(modal) {
+            modal.classList.remove('cerrando');
+            desbloquearScrollPagina();
 
-            temporizadorCierreGollmann = window.setTimeout(function () {
-                temporizadorCierreGollmann = null;
-                if (typeof modalGollmann.close === 'function') {
-                    modalGollmann.close();
+            if (modalActivo === modal) {
+                modalActivo = null;
+                if (focoAnterior && typeof focoAnterior.focus === 'function') {
+                    focoAnterior.focus();
+                }
+            }
+        }
+
+        function cerrarModalExperiencia(modal) {
+            if (!modal || !modal.open || modal.classList.contains('cerrando')) return;
+            modal.classList.add('cerrando');
+
+            temporizadorCierre = window.setTimeout(function () {
+                temporizadorCierre = null;
+                if (typeof modal.close === 'function') {
+                    modal.close();
                 } else {
-                    modalGollmann.removeAttribute('open');
-                    desbloquearScrollPagina();
-                    if (focoAnteriorGollmann) focoAnteriorGollmann.focus();
+                    modal.removeAttribute('open');
+                    finalizarCierreModal(modal);
                 }
             }, reducirMovimientoModal ? 0 : 180);
         }
 
-        disparadoresGollmann.forEach(function (disparador) {
+        disparadoresExperiencia.forEach(function (disparador) {
             disparador.addEventListener('click', function () {
-                abrirModalGollmann(disparador);
+                abrirModalExperiencia(disparador);
             });
         });
 
-        if (cerrarGollmann) {
-            cerrarGollmann.addEventListener('click', cerrarModalGollmann);
-        }
-
-        // Cierra al hacer clic fuera de la tarjeta (la zona del overlay)
-        modalGollmann.addEventListener('click', function (evento) {
-            if (evento.target === modalGollmann) cerrarModalGollmann();
-        });
-
-        // Escape: evita el cierre inmediato para respetar la animación
-        modalGollmann.addEventListener('cancel', function (evento) {
-            evento.preventDefault();
-            cerrarModalGollmann();
-        });
-
-        modalGollmann.addEventListener('close', function () {
-            modalGollmann.classList.remove('cerrando');
-            desbloquearScrollPagina();
-            if (focoAnteriorGollmann && typeof focoAnteriorGollmann.focus === 'function') {
-                focoAnteriorGollmann.focus();
+        modalesExperiencia.forEach(function (modal) {
+            var botonCerrar = modal.querySelector('.modal-experiencia__cerrar');
+            if (botonCerrar) {
+                botonCerrar.addEventListener('click', function () {
+                    cerrarModalExperiencia(modal);
+                });
             }
+
+            // Cierra al hacer clic fuera de la tarjeta (la zona del overlay)
+            modal.addEventListener('click', function (evento) {
+                if (evento.target === modal) cerrarModalExperiencia(modal);
+            });
+
+            // Escape: evita el cierre inmediato para respetar la animación
+            modal.addEventListener('cancel', function (evento) {
+                evento.preventDefault();
+                cerrarModalExperiencia(modal);
+            });
+
+            modal.addEventListener('close', function () {
+                finalizarCierreModal(modal);
+            });
         });
     }
 

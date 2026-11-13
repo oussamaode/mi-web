@@ -480,32 +480,15 @@ main, .pie {
     font-weight: 600;
 }
 
-/* Popover nativo */
-.popover {
-    max-width: 520px;
-    padding: 22px 26px;
-    border: 1px solid var(--superficie-borde);
-    border-radius: var(--radio);
-    background: var(--superficie);
-    color: var(--texto);
-    box-shadow: var(--sombra-hover);
-}
-.popover::backdrop {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(2px);
-}
-.popover h3 { margin-top: 0; color: var(--enlace); font-family: var(--fuente-titulos); }
-.popover ul { padding-left: 20px; }
-
 /* =========================================================
-   5.1 MODAL: EXPERIENCIA EN GOLLMANN
+   5.1 MODALES: EXPERIENCIA PROFESIONAL
    ========================================================= */
 body.modal-abierto,
 html.modal-abierto {
     overflow: hidden;
 }
 
-.modal-gollmann {
+.modal-experiencia {
     position: fixed;
     inset: 0;
     width: 100%;
@@ -522,27 +505,27 @@ html.modal-abierto {
     color-scheme: light;
 }
 
-.modal-gollmann[open] {
+.modal-experiencia[open] {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.modal-gollmann::backdrop {
+.modal-experiencia::backdrop {
     background: rgba(15, 23, 42, 0.75);
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
 }
 
-.modal-gollmann[open]::backdrop {
-    animation: modalGollmannFondoEntrada 0.25s ease-out both;
+.modal-experiencia[open]::backdrop {
+    animation: modalExperienciaFondoEntrada 0.25s ease-out both;
 }
 
-.modal-gollmann.cerrando::backdrop {
-    animation: modalGollmannFondoSalida 0.18s ease-in both;
+.modal-experiencia.cerrando::backdrop {
+    animation: modalExperienciaFondoSalida 0.18s ease-in both;
 }
 
-.modal-gollmann__tarjeta {
+.modal-experiencia__tarjeta {
     width: 100%;
     max-width: 460px;
     max-height: calc(100vh - 48px);
@@ -556,15 +539,15 @@ html.modal-abierto {
     transform-origin: center;
 }
 
-.modal-gollmann[open] .modal-gollmann__tarjeta {
-    animation: modalGollmannEntrada 0.25s ease-out both;
+.modal-experiencia[open] .modal-experiencia__tarjeta {
+    animation: modalExperienciaEntrada 0.25s ease-out both;
 }
 
-.modal-gollmann.cerrando .modal-gollmann__tarjeta {
-    animation: modalGollmannSalida 0.18s ease-in both;
+.modal-experiencia.cerrando .modal-experiencia__tarjeta {
+    animation: modalExperienciaSalida 0.18s ease-in both;
 }
 
-.modal-gollmann__cabecera {
+.modal-experiencia__cabecera {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -572,14 +555,14 @@ html.modal-abierto {
     padding: 18px 20px;
 }
 
-.modal-gollmann__logo {
+.modal-experiencia__logo {
     display: block;
     width: auto;
     max-width: 160px;
     max-height: 28px;
 }
 
-.modal-gollmann__cerrar {
+.modal-experiencia__cerrar {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -598,17 +581,17 @@ html.modal-abierto {
     transition: background-color 0.2s, color 0.2s;
 }
 
-.modal-gollmann__cerrar:hover {
+.modal-experiencia__cerrar:hover {
     background: #f1f5f9;
     color: #0f172a;
 }
 
-.modal-gollmann__cerrar:focus-visible {
+.modal-experiencia__cerrar:focus-visible {
     outline: 3px solid #0f172a;
     outline-offset: 2px;
 }
 
-.modal-gollmann__visual {
+.modal-experiencia__visual {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -616,7 +599,11 @@ html.modal-abierto {
     background: #cecfd1;
 }
 
-.modal-gollmann__gif {
+.modal-experiencia__visual--honeywell { background: #cccdcf; }
+.modal-experiencia__visual--gollmann { background: #cecfd1; }
+.modal-experiencia__visual--talgo { background: #c9d3dd; }
+
+.modal-experiencia__gif {
     display: block;
     width: 230px;
     max-width: 100%;
@@ -624,11 +611,11 @@ html.modal-abierto {
     border-radius: 10px;
 }
 
-.modal-gollmann__contenido {
+.modal-experiencia__contenido {
     padding: 26px 28px 30px;
 }
 
-.modal-gollmann__puesto {
+.modal-experiencia__puesto {
     margin: 0 0 6px;
     font-family: var(--fuente-titulos);
     font-size: 1.3rem;
@@ -637,7 +624,7 @@ html.modal-abierto {
     color: #0f172a;
 }
 
-.modal-gollmann__fechas {
+.modal-experiencia__fechas {
     margin: 0 0 22px;
     font-size: 0.78rem;
     font-weight: 600;
@@ -646,7 +633,7 @@ html.modal-abierto {
     color: #64748b;
 }
 
-.modal-gollmann__subtitulo {
+.modal-experiencia__subtitulo {
     margin: 0 0 10px;
     font-size: 0.82rem;
     font-weight: 600;
@@ -655,7 +642,7 @@ html.modal-abierto {
     color: #475569;
 }
 
-.modal-gollmann__lista {
+.modal-experiencia__lista {
     margin: 0;
     padding-left: 20px;
     color: #475569;
@@ -663,24 +650,24 @@ html.modal-abierto {
     line-height: 1.65;
 }
 
-.modal-gollmann__lista li + li { margin-top: 8px; }
+.modal-experiencia__lista li + li { margin-top: 8px; }
 
-@keyframes modalGollmannEntrada {
+@keyframes modalExperienciaEntrada {
     from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
 }
 
-@keyframes modalGollmannSalida {
+@keyframes modalExperienciaSalida {
     from { opacity: 1; transform: scale(1); }
     to { opacity: 0; transform: scale(0.97); }
 }
 
-@keyframes modalGollmannFondoEntrada {
+@keyframes modalExperienciaFondoEntrada {
     from { opacity: 0; }
     to { opacity: 1; }
 }
 
-@keyframes modalGollmannFondoSalida {
+@keyframes modalExperienciaFondoSalida {
     from { opacity: 1; }
     to { opacity: 0; }
 }
@@ -788,16 +775,16 @@ html.modal-abierto {
         bottom: 3px;
         height: 16px;
     }
-    .modal-gollmann { padding: 16px; }
-    .modal-gollmann__tarjeta {
+    .modal-experiencia { padding: 16px; }
+    .modal-experiencia__tarjeta {
         max-height: calc(100vh - 32px);
         max-height: calc(100dvh - 32px);
     }
-    .modal-gollmann__cabecera { padding: 14px 16px; }
-    .modal-gollmann__visual { padding: 14px 18px; }
-    .modal-gollmann__gif { width: 200px; }
-    .modal-gollmann__contenido { padding: 22px 20px 26px; }
-    .modal-gollmann__puesto { font-size: 1.2rem; }
+    .modal-experiencia__cabecera { padding: 14px 16px; }
+    .modal-experiencia__visual { padding: 14px 18px; }
+    .modal-experiencia__gif { width: 200px; }
+    .modal-experiencia__contenido { padding: 22px 20px 26px; }
+    .modal-experiencia__puesto { font-size: 1.2rem; }
 }
 
 /* =========================================================
@@ -880,10 +867,10 @@ html.modal-abierto {
     }
     .gusto:hover { transform: none; }
     .via-parada { transition: none; }
-    .modal-gollmann[open] .modal-gollmann__tarjeta,
-    .modal-gollmann.cerrando .modal-gollmann__tarjeta,
-    .modal-gollmann[open]::backdrop,
-    .modal-gollmann.cerrando::backdrop {
+    .modal-experiencia[open] .modal-experiencia__tarjeta,
+    .modal-experiencia.cerrando .modal-experiencia__tarjeta,
+    .modal-experiencia[open]::backdrop,
+    .modal-experiencia.cerrando::backdrop {
         animation: none;
     }
 }

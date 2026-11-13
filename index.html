@@ -191,46 +191,17 @@
             <h2>Lo que he hecho</h2>
             <p>Pulsa en cada puesto para ver las tareas que he realizado.</p>
 
-            <!-- Botones de experiencia: Honeywell/Talgo usan popovers nativos y Gollmann un modal -->
-            <button popovertarget="exp1" class="btn-trabajo">
+            <!-- Botones que abren los modales de experiencia -->
+            <button type="button" class="btn-trabajo" data-abrir-modal="modal-honeywell" aria-haspopup="dialog">
                 Field Service Technician · <strong>HONEYWELL</strong> · Madrid
             </button>
             <button type="button" class="btn-trabajo" data-abrir-modal="modal-gollmann" aria-haspopup="dialog">
                 Responsable de Puesta en Marcha · <strong>GOLLMAN ZWICK</strong> · Madrid
             </button>
-            <button popovertarget="exp3" class="btn-trabajo btn-act">
+            <button type="button" class="btn-trabajo btn-act" data-abrir-modal="modal-talgo" aria-haspopup="dialog">
                 Técnico de Puesta en Marcha y Mantenimiento · <strong>PATENTES TALGO SL</strong> · Arabia / España · Actualidad
             </button>
 
-            <!-- Popover: HONEYWELL -->
-            <div popover id="exp1" class="popover">
-                <h3>Sep 2023 – Abr 2024</h3>
-                <h4>Tareas realizadas:</h4>
-                <ul>
-                    <li>Puesta en marcha de sistemas BMS Honeywell en edificios singulares.</li>
-                    <li>Programación y ajuste de PLC para control de climatización (HVAC).</li>
-                    <li>Mantenimiento preventivo y correctivo de instalaciones.</li>
-                    <li>Diagnóstico y resolución de averías.</li>
-                    <li>Intervención en edificios relevantes de Madrid (Teatro Real, Hospital Gómez Ulla, entre otros).</li>
-                </ul>
-            </div>
-
-            <!-- Popover: PATENTES TALGO -->
-            <div popover id="exp3" class="popover">
-                <h3>Jun 2017 – Sep 2022 &amp; May 2024 – Actualidad</h3>
-                <h4>Tareas realizadas:</h4>
-                <ul>
-                    <li>Puesta en servicio de trenes de alta velocidad serie Talgo 350.</li>
-                    <li>Realización de pruebas estáticas y dinámicas.</li>
-                    <li>Pruebas de sistemas de freno Knorr-Bremse.</li>
-                    <li>Trabajos en alta tensión y mantenimiento eléctrico.</li>
-                    <li>Mantenimiento y diagnóstico de equipos de aire acondicionado Merak.</li>
-                    <li>Supervisión y diagnóstico de sistemas de comunicación MVB, BUS y Ethernet.</li>
-                    <li>Maniobras con el tren y resolución de averías eléctricas y de comunicación.</li>
-                    <li>Carga y actualización de software embarcado.</li>
-                    <li>Ejecución de cortes de catenaria en talleres de mantenimiento.</li>
-                </ul>
-            </div>
         </section>
 
         <!-- ====== ME GUSTA (cuadrícula de 2 columnas) ====== -->
@@ -284,31 +255,97 @@
         <p class="copyright">© 2026 · OUSSAMA EL ABBAS AKHRIF</p>
     </footer>
 
-    <!-- ====== MODAL: EXPERIENCIA EN GOLLMANN ====== -->
-    <dialog id="modal-gollmann" class="modal-gollmann" aria-labelledby="modal-gollmann-titulo">
-        <article class="modal-gollmann__tarjeta">
-            <header class="modal-gollmann__cabecera">
-                <img src="assets/gollmann/gollmann.webp" alt="Gollmann Zwick" class="modal-gollmann__logo">
-                <button type="button" class="modal-gollmann__cerrar" aria-label="Cerrar ventana">✕</button>
+    <!-- ====== MODALES: EXPERIENCIA PROFESIONAL ====== -->
+    <dialog id="modal-honeywell" class="modal-experiencia" aria-labelledby="modal-honeywell-titulo">
+        <article class="modal-experiencia__tarjeta">
+            <header class="modal-experiencia__cabecera">
+                <img src="assets/honeywell/honeywell.webp" alt="Honeywell" class="modal-experiencia__logo">
+                <button type="button" class="modal-experiencia__cerrar" aria-label="Cerrar ventana">✕</button>
             </header>
 
-            <div class="modal-gollmann__visual">
-                <img src="assets/gollmann/gollmann_animacion.gif"
-                     alt="Animación de un robot automatizado de Gollmann"
-                     class="modal-gollmann__gif"
+            <div class="modal-experiencia__visual modal-experiencia__visual--honeywell">
+                <img src="assets/honeywell/honeywell_animacion.gif"
+                     alt="Animación de un sistema Honeywell"
+                     class="modal-experiencia__gif"
                      width="230" height="230"
                      loading="lazy">
             </div>
 
-            <div class="modal-gollmann__contenido">
-                <h2 id="modal-gollmann-titulo" class="modal-gollmann__puesto">Responsable de Puesta en Marcha</h2>
-                <p class="modal-gollmann__fechas">Oct 2022 – Sep 2023</p>
+            <div class="modal-experiencia__contenido">
+                <h2 id="modal-honeywell-titulo" class="modal-experiencia__puesto">Field Service Technician</h2>
+                <p class="modal-experiencia__fechas">Sep 2023 – Abr 2024</p>
 
-                <h3 class="modal-gollmann__subtitulo">Tareas realizadas</h3>
-                <ul class="modal-gollmann__lista">
+                <h3 class="modal-experiencia__subtitulo">Tareas realizadas</h3>
+                <ul class="modal-experiencia__lista">
+                    <li>Puesta en marcha de sistemas BMS Honeywell en edificios singulares.</li>
+                    <li>Programación y ajuste de PLC para control de climatización (HVAC).</li>
+                    <li>Mantenimiento preventivo y correctivo de instalaciones.</li>
+                    <li>Diagnóstico y resolución de averías.</li>
+                    <li>Intervención en edificios relevantes de Madrid (Teatro Real, Hospital Gómez Ulla, entre otros).</li>
+                </ul>
+            </div>
+        </article>
+    </dialog>
+
+    <dialog id="modal-gollmann" class="modal-experiencia" aria-labelledby="modal-gollmann-titulo">
+        <article class="modal-experiencia__tarjeta">
+            <header class="modal-experiencia__cabecera">
+                <img src="assets/gollmann/gollmann.webp" alt="Gollmann Zwick" class="modal-experiencia__logo">
+                <button type="button" class="modal-experiencia__cerrar" aria-label="Cerrar ventana">✕</button>
+            </header>
+
+            <div class="modal-experiencia__visual modal-experiencia__visual--gollmann">
+                <img src="assets/gollmann/gollmann_animacion.gif"
+                     alt="Animación de un robot automatizado de Gollmann"
+                     class="modal-experiencia__gif"
+                     width="230" height="230"
+                     loading="lazy">
+            </div>
+
+            <div class="modal-experiencia__contenido">
+                <h2 id="modal-gollmann-titulo" class="modal-experiencia__puesto">Responsable de Puesta en Marcha</h2>
+                <p class="modal-experiencia__fechas">Oct 2022 – Sep 2023</p>
+
+                <h3 class="modal-experiencia__subtitulo">Tareas realizadas</h3>
+                <ul class="modal-experiencia__lista">
                     <li>Instalación y puesta en marcha de robots automatizados para farmacias.</li>
                     <li>Configuración, pruebas funcionales y validación de sistemas.</li>
                     <li>Desplazamientos y trabajos en proyectos internacionales por toda Europa.</li>
+                </ul>
+            </div>
+        </article>
+    </dialog>
+
+    <dialog id="modal-talgo" class="modal-experiencia" aria-labelledby="modal-talgo-titulo">
+        <article class="modal-experiencia__tarjeta">
+            <header class="modal-experiencia__cabecera">
+                <img src="assets/talgo/talgo.webp" alt="Patentes Talgo" class="modal-experiencia__logo">
+                <button type="button" class="modal-experiencia__cerrar" aria-label="Cerrar ventana">✕</button>
+            </header>
+
+            <div class="modal-experiencia__visual modal-experiencia__visual--talgo">
+                <img src="assets/talgo/talgo_animacion.gif"
+                     alt="Animación de un tren Talgo"
+                     class="modal-experiencia__gif"
+                     width="230" height="230"
+                     loading="lazy">
+            </div>
+
+            <div class="modal-experiencia__contenido">
+                <h2 id="modal-talgo-titulo" class="modal-experiencia__puesto">Técnico de Puesta en Marcha y Mantenimiento</h2>
+                <p class="modal-experiencia__fechas">Jun 2017 – Sep 2022 &amp; May 2024 – Actualidad</p>
+
+                <h3 class="modal-experiencia__subtitulo">Tareas realizadas</h3>
+                <ul class="modal-experiencia__lista">
+                    <li>Puesta en servicio de trenes de alta velocidad serie Talgo 350.</li>
+                    <li>Realización de pruebas estáticas y dinámicas.</li>
+                    <li>Pruebas de sistemas de freno Knorr-Bremse.</li>
+                    <li>Trabajos en alta tensión y mantenimiento eléctrico.</li>
+                    <li>Mantenimiento y diagnóstico de equipos de aire acondicionado Merak.</li>
+                    <li>Supervisión y diagnóstico de sistemas de comunicación MVB, BUS y Ethernet.</li>
+                    <li>Maniobras con el tren y resolución de averías eléctricas y de comunicación.</li>
+                    <li>Carga y actualización de software embarcado.</li>
+                    <li>Ejecución de cortes de catenaria en talleres de mantenimiento.</li>
                 </ul>
             </div>
         </article>
