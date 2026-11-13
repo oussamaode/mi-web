@@ -191,11 +191,11 @@
             <h2>Lo que he hecho</h2>
             <p>Pulsa en cada puesto para ver las tareas que he realizado.</p>
 
-            <!-- Botones que abren los popovers nativos -->
+            <!-- Botones de experiencia: Honeywell/Talgo usan popovers nativos y Gollmann un modal -->
             <button popovertarget="exp1" class="btn-trabajo">
                 Field Service Technician · <strong>HONEYWELL</strong> · Madrid
             </button>
-            <button popovertarget="exp2" class="btn-trabajo">
+            <button type="button" class="btn-trabajo" data-abrir-modal="modal-gollmann" aria-haspopup="dialog">
                 Responsable de Puesta en Marcha · <strong>GOLLMAN ZWICK</strong> · Madrid
             </button>
             <button popovertarget="exp3" class="btn-trabajo btn-act">
@@ -212,17 +212,6 @@
                     <li>Mantenimiento preventivo y correctivo de instalaciones.</li>
                     <li>Diagnóstico y resolución de averías.</li>
                     <li>Intervención en edificios relevantes de Madrid (Teatro Real, Hospital Gómez Ulla, entre otros).</li>
-                </ul>
-            </div>
-
-            <!-- Popover: GOLLMAN ZWICK -->
-            <div popover id="exp2" class="popover">
-                <h3>Oct 2022 – Sep 2023</h3>
-                <h4>Tareas realizadas:</h4>
-                <ul>
-                    <li>Instalación y puesta en marcha de robots automatizados para farmacias.</li>
-                    <li>Configuración, pruebas funcionales y validación de sistemas.</li>
-                    <li>Desplazamientos y trabajos en proyectos internacionales por toda Europa.</li>
                 </ul>
             </div>
 
@@ -294,6 +283,36 @@
 
         <p class="copyright">© 2026 · OUSSAMA EL ABBAS AKHRIF</p>
     </footer>
+
+    <!-- ====== MODAL: EXPERIENCIA EN GOLLMANN ====== -->
+    <dialog id="modal-gollmann" class="modal-gollmann" aria-labelledby="modal-gollmann-titulo">
+        <article class="modal-gollmann__tarjeta">
+            <header class="modal-gollmann__cabecera">
+                <img src="assets/gollmann/gollmann.webp" alt="Gollmann Zwick" class="modal-gollmann__logo">
+                <button type="button" class="modal-gollmann__cerrar" aria-label="Cerrar ventana">✕</button>
+            </header>
+
+            <div class="modal-gollmann__visual">
+                <img src="assets/gollmann/gollmann_animacion.gif"
+                     alt="Animación de un robot automatizado de Gollmann"
+                     class="modal-gollmann__gif"
+                     width="230" height="230"
+                     loading="lazy">
+            </div>
+
+            <div class="modal-gollmann__contenido">
+                <h2 id="modal-gollmann-titulo" class="modal-gollmann__puesto">Responsable de Puesta en Marcha</h2>
+                <p class="modal-gollmann__fechas">Oct 2022 – Sep 2023</p>
+
+                <h3 class="modal-gollmann__subtitulo">Tareas realizadas</h3>
+                <ul class="modal-gollmann__lista">
+                    <li>Instalación y puesta en marcha de robots automatizados para farmacias.</li>
+                    <li>Configuración, pruebas funcionales y validación de sistemas.</li>
+                    <li>Desplazamientos y trabajos en proyectos internacionales por toda Europa.</li>
+                </ul>
+            </div>
+        </article>
+    </dialog>
 
     <!-- ====== WIDGET flotante (esquina): ubicación + fecha + hora ====== -->
     <!-- Datos rellenados por freeipapi.com (ver script.js) -->

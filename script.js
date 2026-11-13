@@ -149,6 +149,92 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     cargarRepositorios();
 
+    // 5.1) Modal interactivo: experiencia en Gollmann
+    var modalGollmann = document.getElementById('modal-gollmann');
+    if (modalGollmann) {
+        var disparadoresGollmann = document.querySelectorAll('[data-abrir-modal="modal-gollmann"]');
+        var cerrarGollmann = modalGollmann.querySelector('.modal-gollmann__cerrar');
+        var focoAnteriorGollmann = null;
+        var temporizadorCierreGollmann = null;
+        var reducirMovimientoModal = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function bloquearScrollPagina() {
+            var anchoBarra = window.innerWidth - document.documentElement.clientWidth;
+            document.body.style.paddingRight = anchoBarra > 0 ? anchoBarra + 'px' : '';
+            document.body.classList.add('modal-abierto');
+            document.documentElement.classList.add('modal-abierto');
+        }
+
+        function desbloquearScrollPagina() {
+            document.body.classList.remove('modal-abierto');
+            document.documentElement.classList.remove('modal-abierto');
+            document.body.style.paddingRight = '';
+        }
+
+        function abrirModalGollmann(disparador) {
+            focoAnteriorGollmann = disparador || document.activeElement;
+            if (temporizadorCierreGollmann) {
+                window.clearTimeout(temporizadorCierreGollmann);
+                temporizadorCierreGollmann = null;
+            }
+            modalGollmann.classList.remove('cerrando');
+            bloquearScrollPagina();
+
+            if (typeof modalGollmann.showModal === 'function') {
+                modalGollmann.showModal();
+            } else {
+                modalGollmann.setAttribute('open', '');
+            }
+
+            if (cerrarGollmann) cerrarGollmann.focus();
+        }
+
+        function cerrarModalGollmann() {
+            if (!modalGollmann.open || modalGollmann.classList.contains('cerrando')) return;
+            modalGollmann.classList.add('cerrando');
+
+            temporizadorCierreGollmann = window.setTimeout(function () {
+                temporizadorCierreGollmann = null;
+                if (typeof modalGollmann.close === 'function') {
+                    modalGollmann.close();
+                } else {
+                    modalGollmann.removeAttribute('open');
+                    desbloquearScrollPagina();
+                    if (focoAnteriorGollmann) focoAnteriorGollmann.focus();
+                }
+            }, reducirMovimientoModal ? 0 : 180);
+        }
+
+        disparadoresGollmann.forEach(function (disparador) {
+            disparador.addEventListener('click', function () {
+                abrirModalGollmann(disparador);
+            });
+        });
+
+        if (cerrarGollmann) {
+            cerrarGollmann.addEventListener('click', cerrarModalGollmann);
+        }
+
+        // Cierra al hacer clic fuera de la tarjeta (la zona del overlay)
+        modalGollmann.addEventListener('click', function (evento) {
+            if (evento.target === modalGollmann) cerrarModalGollmann();
+        });
+
+        // Escape: evita el cierre inmediato para respetar la animación
+        modalGollmann.addEventListener('cancel', function (evento) {
+            evento.preventDefault();
+            cerrarModalGollmann();
+        });
+
+        modalGollmann.addEventListener('close', function () {
+            modalGollmann.classList.remove('cerrando');
+            desbloquearScrollPagina();
+            if (focoAnteriorGollmann && typeof focoAnteriorGollmann.focus === 'function') {
+                focoAnteriorGollmann.focus();
+            }
+        });
+    }
+
     // 6) Navegación: menú móvil, enlace activo, vía del tren y volver arriba
     var navbar = document.getElementById('navbar');
     var menuToggle = document.getElementById('menu-toggle');
